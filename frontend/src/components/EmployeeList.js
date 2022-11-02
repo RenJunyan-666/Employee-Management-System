@@ -2,8 +2,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import EmployeeService from "../services/EmployeeService";
 
-export default function EmployeeList() {
+export default function EmployeeList(props) {
   const [employees, setEmployees] = useState([]);
+
+  const addEmployee = () => {
+    props.history.push("/add-employee");
+  };
 
   useEffect(() => {
     EmployeeService.getEmployees().then((res) => {
@@ -14,6 +18,11 @@ export default function EmployeeList() {
   return (
     <div>
       <h2 className="text-center">Employee List</h2>
+      <div className="row" style={{width:'200px', marginBottom:'10px'}}>
+        <button className="btn btn-primary" onClick={addEmployee}>
+          Add Employee
+        </button>
+      </div>
       <div className="row">
         <table className="table table-striped table-bordered">
           <thead>
