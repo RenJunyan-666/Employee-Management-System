@@ -9,6 +9,10 @@ export default function EmployeeList(props) {
     props.history.push("/add-employee");
   };
 
+  const editEmployee = (id) => {
+    props.history.push(`/update-employee/${id}`);
+  };
+
   useEffect(() => {
     EmployeeService.getEmployees().then((res) => {
       setEmployees(res.data);
@@ -18,7 +22,7 @@ export default function EmployeeList(props) {
   return (
     <div>
       <h2 className="text-center">Employee List</h2>
-      <div className="row" style={{width:'200px', marginBottom:'10px'}}>
+      <div className="row" style={{ width: "200px", marginBottom: "10px" }}>
         <button className="btn btn-primary" onClick={addEmployee}>
           Add Employee
         </button>
@@ -40,6 +44,14 @@ export default function EmployeeList(props) {
                 <td>{employee.firstName}</td>
                 <td>{employee.lastName}</td>
                 <td>{employee.emailId}</td>
+                <td>
+                  <button
+                    onClick={()=>editEmployee(employee.id)}
+                    className="btn btn-info"
+                  >
+                    Edit
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
