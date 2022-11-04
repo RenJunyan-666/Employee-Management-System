@@ -6,11 +6,21 @@ export default function EmployeeList(props) {
   const [employees, setEmployees] = useState([]);
 
   const addEmployee = () => {
-    props.history.push("/add-employee");
+    props.history.push("/add-employee/-1");
   };
 
   const editEmployee = (id) => {
-    props.history.push(`/update-employee/${id}`);
+    props.history.push(`/add-employee/${id}`);
+  };
+
+  const deleteEmployee = (id) => {
+    EmployeeService.deleteEmployee(id).then((res) => {
+      setEmployees(employees.filter((employee) => employee.id !== id));
+    });
+  };
+
+  const viewEmployee = (id) => {
+    props.history.push(`/view-employee/${id}`);
   };
 
   useEffect(() => {
@@ -46,10 +56,24 @@ export default function EmployeeList(props) {
                 <td>{employee.emailId}</td>
                 <td>
                   <button
-                    onClick={()=>editEmployee(employee.id)}
+                    onClick={() => editEmployee(employee.id)}
                     className="btn btn-info"
                   >
                     Edit
+                  </button>
+                  <button
+                    onClick={() => deleteEmployee(employee.id)}
+                    className="btn btn-danger"
+                    style={{ marginLeft: "10px" }}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => viewEmployee(employee.id)}
+                    className="btn btn-info"
+                    style={{ marginLeft: "10px" }}
+                  >
+                    View
                   </button>
                 </td>
               </tr>
